@@ -1006,8 +1006,8 @@ const Sidebar = ({ page, onNavigate, collapsed }) => {
 // ============================================================
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [page, setPage] = useState("dashboard");
-  const [selectedProject, setSelectedProject] = useState(null);
+  // const [page, setPage] = useState("dashboard");
+  // const [selectedProject, setSelectedProject] = useState(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const notifRef = useRef(null);
