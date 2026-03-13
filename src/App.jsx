@@ -1,4 +1,4 @@
-import { useState, useContext, createContext, useReducer, useCallback } from "react";
+import { useState, useContext, useRef, createContext, useReducer, useCallback } from "react";
 
 // ============================================================
 // DESIGN SYSTEM & CONSTANTS
@@ -1010,17 +1010,20 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const notifRef = useRef(null);
 
-  const onNavigate = useCallback((p, data) => {
-    if (p === "project") {
-      setSelectedProject(data);
-      setPage("project");
-    } else {
-      setPage(p);
-      setSelectedProject(null);
-    }
-    setShowNotifications(false);
-  }, []);
+  useEffect(() => {
+    if (!showNotifications) return;
+    const handleClickOutside = (e) => {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showNotifications]);
+
+  const onNavigate = useCallback
 
   const renderPage = () => {
     switch (page) {
@@ -1058,7 +1061,7 @@ export default function App() {
             <span style={{ fontSize: 13, color: "#334155", fontFamily: "'Space Mono', monospace" }}>/</span>
             <span style={{ fontSize: 13, color: "#64748b", fontFamily: "'Space Mono', monospace", textTransform: "capitalize" }}>{page === "project" ? selectedProject?.name : page}</span>
             <div style={{ flex: 1 }} />
-            <div style={{ position: "relative" }}>
+            <div ref={notifRef} style={{ position: "relative" }}>
               <button onClick={() => setShowNotifications(s => !s)}
                 style={{ background: showNotifications ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, color: "#94a3b8", padding: "6px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontSize: 13 }}>
                 🔔
