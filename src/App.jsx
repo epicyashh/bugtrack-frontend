@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext, useReducer, useCallback } from "react";
+import { useState, useContext, createContext, useReducer, useCallback } from "react";
 
 // ============================================================
 // DESIGN SYSTEM & CONSTANTS
@@ -144,15 +144,7 @@ const Tag = ({ label }) => (
   }}>{label}</span>
 );
 
-const Spinner = () => (
-  <div style={{ display: "flex", justifyContent: "center", padding: 40 }}>
-    <div style={{
-      width: 28, height: 28, border: "3px solid rgba(99,102,241,0.2)",
-      borderTopColor: "#6366f1", borderRadius: "50%",
-      animation: "spin 0.7s linear infinite",
-    }} />
-  </div>
-);
+
 
 // ============================================================
 // MODAL SYSTEM
@@ -510,7 +502,7 @@ const KanbanBoard = ({ tickets, onTicketClick }) => {
 // TICKETS PAGE
 // ============================================================
 const TicketsPage = ({ projectFilter = null }) => {
-  const { state, dispatch } = useApp();
+  const { state } = useApp();
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterPriority, setFilterPriority] = useState("all");
